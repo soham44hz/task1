@@ -25,7 +25,7 @@ jobs:
             ${{ runner.os }}-node-
         
       - name: Install Dependencies
-        run: npm Install
+        run: npm install
 
       - name: Get Version from package.json
         id: version
