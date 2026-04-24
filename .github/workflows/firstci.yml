@@ -7,7 +7,7 @@ jobs:
   build-and-push:
     runs-on:
       ubuntu-latest
-    step:
+    steps:
       - name: checkout code
         uses: actions/checkout@v4
 
