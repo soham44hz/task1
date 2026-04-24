@@ -1,0 +1,37 @@
+name: My first Workflow
+on: 
+  push:
+    branches:
+      - master
+jobs:
+  build-and-push:
+    runs-on:
+      ubuntu-latest
+    step:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cache npm Dependencies
+        uses: actions/cache@v4
+        with:
+          path: -/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+        
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Get Version from package.json
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "App version: $VERSION"
+
+      
